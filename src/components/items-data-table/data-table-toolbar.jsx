@@ -24,6 +24,7 @@ export function DataTableToolbar({ table }) {
     const [availableStock, setAvailableStock] = useState("");
     const { toast } = useToast();
     const setItemsCnt = useGlobalStore((state) => state.setItemsCnt);
+    const jwt = useGlobalStore((state) => state.jwt);
 
     const onClickSelectCategory = () => {
         // fetch("https://kaizntree-backend.vercel.app/api/inventory/category/list/", {
@@ -31,6 +32,7 @@ export function DataTableToolbar({ table }) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: "Bearer " + jwt,
             },
         })
             .then((res) => res.json())

@@ -20,13 +20,16 @@ const ItemsPage = () => {
     const setItemsCnt = useGlobalStore((state) => state.setItemsCnt);
     const [categories, setCategories] = useState("");
     const { toast } = useToast();
+    const jwt = useGlobalStore((state) => state.jwt);
 
     const fetchItems = async () => {
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/item/count/", {
+        fetch("https://kaizntree-backend.vercel.app/api/inventory/item/count/" + jwt, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: "Bearer " + jwt,
             },
+            credentials: "include",
         })
             .then((res) => res.json())
             .then((data) => {

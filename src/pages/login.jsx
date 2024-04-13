@@ -4,12 +4,15 @@ import { Button } from "../components/ui/button";
 import Alert from "../components/ui/alert";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../components/toast/use-toast";
+import { useGlobalStore } from "../components/store/globalStore";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { toast } = useToast();
+    const jwt = useGlobalStore((state) => state.jwt);
+    const setJwt = useGlobalStore((state) => state.setJwt);
 
     const loginHandler = () => {
         if (email === "" || password === "") {
@@ -31,6 +34,7 @@ const Login = () => {
                     toast({ title: "Error: " + JSON.stringify(data.error), variant: "destructive" });
                 } else {
                     toast({ title: "Logged in successfully!", variant: "success" });
+                    setJwt(data.jwt);
                     navigate("/dashboard");
                 }
             });
@@ -63,7 +67,7 @@ const Login = () => {
         <div className="h-screen flex justify-center items-center">
             {alert.message && <Alert message={alert.message} type={alert.type} />}
             <div className="w-full max-w-xs">
-                <h1 className="text-2xl mx-auto w-full text-center font-extrabold">Kaizentree</h1>
+                <h1 className="text-2xl mx-auto w-full text-center font-extrabold">Kaizntree</h1>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
                         <Input id="email" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
