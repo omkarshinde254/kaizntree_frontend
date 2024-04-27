@@ -13,6 +13,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRad
 import { useToast } from "../toast/use-toast";
 import { useGlobalStore } from "../store/globalStore.jsx";
 
+// const baseUrl = "https://kaizntree-backend.vercel.app/api/inventory/";
+// const baseUrl = "http://localhost:8000/api/inventory/";
 export function DataTableToolbar({ table }) {
     const isFiltered = table.getState().columnFilters.length > 0;
     const [categories, setCategories] = useState([]);
@@ -25,10 +27,11 @@ export function DataTableToolbar({ table }) {
     const { toast } = useToast();
     const setItemsCnt = useGlobalStore((state) => state.setItemsCnt);
     const jwt = useGlobalStore((state) => state.jwt);
+    const baseURL = useGlobalStore((state) => state.baseURL);
 
     const onClickSelectCategory = () => {
         // fetch("https://kaizntree-backend.vercel.app/api/inventory/category/list/", {
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/category/list/", {
+        fetch(baseURL + "api/inventory/category/list/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +54,7 @@ export function DataTableToolbar({ table }) {
             toast({ title: "Please fill in all fields", variant: "destructive" });
             return;
         }
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/item/create/", {
+        fetch(baseURL + "api/inventory/item/create/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,9 +74,9 @@ export function DataTableToolbar({ table }) {
                     toast({ title: "Item creation failed" + JSON.stringify(data.error), variant: "destructive" });
                 } else {
                     toast({ title: "Item created successfully", variant: "success" });
+                    setItemsCnt((prev) => prev + 1);
                 }
             });
-        setItemsCnt((prev) => prev + 1);
     };
     return (
         <div className="flex items-center justify-between">

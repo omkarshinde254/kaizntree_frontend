@@ -13,6 +13,7 @@ const Login = () => {
     const { toast } = useToast();
     const jwt = useGlobalStore((state) => state.jwt);
     const setJwt = useGlobalStore((state) => state.setJwt);
+    const baseURL = useGlobalStore((state) => state.baseURL);
 
     const loginHandler = () => {
         if (email === "" || password === "") {
@@ -20,7 +21,7 @@ const Login = () => {
             return;
         }
         toast({ title: "Logging in ..." });
-        fetch("https://kaizntree-backend.vercel.app/api/user/login/", {
+        fetch(baseURL + "api/user/login/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +47,7 @@ const Login = () => {
             return;
         }
         toast({ title: "Creating account ..." });
-        fetch("https://kaizntree-backend.vercel.app/api/user/register/", {
+        fetch(baseURL + "api/user/register/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

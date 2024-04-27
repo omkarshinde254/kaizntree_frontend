@@ -20,16 +20,17 @@ const ItemsPage = () => {
     const setItemsCnt = useGlobalStore((state) => state.setItemsCnt);
     const [categories, setCategories] = useState("");
     const { toast } = useToast();
-    const jwt = useGlobalStore((state) => state.jwt);
+    // const jwt = useGlobalStore((state) => state.jwt);
+    const baseURL = useGlobalStore((state) => state.baseURL);
 
     const fetchItems = async () => {
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/item/count/" + jwt, {
+        fetch(baseURL + "api/inventory/item/count/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + jwt,
+                // Authorization: "Bearer " + jwt,
             },
-            credentials: "include",
+            // credentials: "include",
         })
             .then((res) => res.json())
             .then((data) => {
@@ -38,7 +39,7 @@ const ItemsPage = () => {
     };
 
     const fetchCategories = async () => {
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/category/count/", {
+        fetch(baseURL + "api/inventory/category/count/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +52,7 @@ const ItemsPage = () => {
     };
 
     const fetchTasks = async () => {
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/item/list/", {
+        fetch(baseURL + "api/inventory/item/list/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +85,7 @@ const ItemsPage = () => {
             toast({ title: "Please fill in all fields", variant: "destructive" });
             return;
         }
-        fetch("https://kaizntree-backend.vercel.app/api/inventory/category/create/", {
+        fetch(baseURL + "api/inventory/category/create/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

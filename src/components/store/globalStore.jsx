@@ -5,4 +5,7 @@ export const useGlobalStore = create((set) => ({
     setItemsCnt: (itemsCnt) => set({ itemsCnt }),
     jwt: "",
     setJwt: (jwt) => set({ jwt }),
+
+    baseURL: "https://kaizntree-backend.vercel.app/",
+    // baseURL: "http://localhost:8000/",
 }));
